@@ -14,7 +14,7 @@
 	"author": "Peter Newman",
 	"license": "MIT",
 	"dependencies": {
-		"@companion-module/base": "~1.11.0",
+		"@companion-module/base": "~1.13.2",
 		"lilliput-monitor": "github:peternewman/lilliput-monitor"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json",
