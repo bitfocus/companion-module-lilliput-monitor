@@ -161,7 +161,7 @@ class LilliputMonitorInstance extends InstanceBase {
 			try {
 				this.udp.close()
 			} catch (error) {
-				this.log('error', 'Error closing UDP port')
+				this.log('error', 'Error closing UDP port: ' + error)
 			} finally {
 				delete this.udp
 			}
@@ -235,8 +235,8 @@ class LilliputMonitorInstance extends InstanceBase {
 			if (typeof data.value === 'object' || Array.isArray(data.value)) {
 				for (var k in data.value) {
 					if (k == 'format1') {
-						var decodedText = ''
-						for (var i = 1; i <= 18; i++) {
+						let decodedText = ''
+						for (let i = 1; i <= 18; i++) {
 							if (data.value['format' + i] !== undefined) {
 								decodedText += String.fromCharCode(data.value['format' + i])
 								// Drop the now redundant original value
@@ -246,8 +246,8 @@ class LilliputMonitorInstance extends InstanceBase {
 						// Truncate on null and strip any trailing whitespace
 						self.DATA['format'] = decodedText.replace(/\0.*$/, '').trimEnd()
 					} else if (k == 'name1') {
-						var decodedText = ''
-						for (var i = 1; i <= 16; i++) {
+						let decodedText = ''
+						for (let i = 1; i <= 16; i++) {
 							if (data.value['name' + i] !== undefined) {
 								decodedText += String.fromCharCode(data.value['name' + i])
 								// Drop the now redundant original value
@@ -273,7 +273,8 @@ class LilliputMonitorInstance extends InstanceBase {
 			this.checkFeedbacks('tint')
 			this.checkFeedbacks('sharpness')
 			this.checkFeedbacks('backlight')
-			this.checkFeedbacks('color-temp')
+			this.checkFeedbacks('color_temp')
+			this.checkFeedbacks('tally_umd1')
 		})
 
 		self.log('debug', 'Binding to UDP port ' + self.config.listen_port)
@@ -358,7 +359,7 @@ class LilliputMonitorInstance extends InstanceBase {
 			try {
 				this.udp.close()
 			} catch (error) {
-				debug('Error closing UDP port')
+				this.log('error', 'Error closing UDP port: ' + error)
 			} finally {
 				delete this.udp
 			}
@@ -432,7 +433,7 @@ class LilliputMonitorInstance extends InstanceBase {
 
 		variableDefinitions.push({
 			name: 'Color Temperature',
-			variableId: 'color-temp',
+			variableId: 'color_temp',
 		})
 
 		// TODO(Peter): Add and expose other variables
@@ -451,16 +452,17 @@ class LilliputMonitorInstance extends InstanceBase {
 			options: [
 				{
 					type: 'dropdown',
-					label: 'source',
+					label: 'Source',
 					id: 'source_name',
 					choices: this.CHOICES_SOURCE,
+					default: this.CHOICES_SOURCE.length > 0 ? this.CHOICES_SOURCE[0].id : '',
 				},
 			],
 			defaultStyle: {
 				color: combineRgb(0, 0, 0),
 				bgcolor: combineRgb(255, 255, 0),
 			},
-			callback: (feedback, bank) => {
+			callback: (feedback) => {
 				return this.DATA.source == feedback.options.source_name
 			},
 		}
@@ -485,7 +487,7 @@ class LilliputMonitorInstance extends InstanceBase {
 				color: combineRgb(0, 0, 0),
 				bgcolor: combineRgb(255, 255, 0),
 			},
-			callback: (feedback, bank) => {
+			callback: (feedback) => {
 				return this.DATA.volume == parseInt(feedback.options.volume)
 			},
 		}
@@ -510,7 +512,7 @@ class LilliputMonitorInstance extends InstanceBase {
 				color: combineRgb(0, 0, 0),
 				bgcolor: combineRgb(255, 255, 0),
 			},
-			callback: (feedback, bank) => {
+			callback: (feedback) => {
 				return this.DATA.contrast == parseInt(feedback.options.contrast)
 			},
 		}
@@ -535,7 +537,7 @@ class LilliputMonitorInstance extends InstanceBase {
 				color: combineRgb(0, 0, 0),
 				bgcolor: combineRgb(255, 255, 0),
 			},
-			callback: (feedback, bank) => {
+			callback: (feedback) => {
 				return this.DATA.brightness == parseInt(feedback.options.brightness)
 			},
 		}
@@ -560,7 +562,7 @@ class LilliputMonitorInstance extends InstanceBase {
 				color: combineRgb(0, 0, 0),
 				bgcolor: combineRgb(255, 255, 0),
 			},
-			callback: (feedback, bank) => {
+			callback: (feedback) => {
 				return this.DATA.sharpness == parseInt(feedback.options.sharpness)
 			},
 		}
@@ -585,7 +587,7 @@ class LilliputMonitorInstance extends InstanceBase {
 				color: combineRgb(0, 0, 0),
 				bgcolor: combineRgb(255, 255, 0),
 			},
-			callback: (feedback, bank) => {
+			callback: (feedback) => {
 				return this.DATA.saturation == parseInt(feedback.options.saturation)
 			},
 		}
@@ -610,7 +612,7 @@ class LilliputMonitorInstance extends InstanceBase {
 				color: combineRgb(0, 0, 0),
 				bgcolor: combineRgb(255, 255, 0),
 			},
-			callback: (feedback, bank) => {
+			callback: (feedback) => {
 				return this.DATA.tint == parseInt(feedback.options.tint)
 			},
 		}
@@ -635,8 +637,52 @@ class LilliputMonitorInstance extends InstanceBase {
 				color: combineRgb(0, 0, 0),
 				bgcolor: combineRgb(255, 255, 0),
 			},
-			callback: (feedback, bank) => {
+			callback: (feedback) => {
 				return this.DATA.backlight == parseInt(feedback.options.backlight)
+			},
+		}
+
+		feedbacks['color_temp'] = {
+			type: 'boolean',
+			name: 'Color Temperature',
+			description: 'If the color temperature is in the specified state, give feedback',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Color Temperature',
+					id: 'color_temp',
+					choices: this.CHOICES_PICTURE_COLOR_TEMP,
+					default: this.CHOICES_PICTURE_COLOR_TEMP.length > 0 ? this.CHOICES_PICTURE_COLOR_TEMP[0].id : '',
+				},
+			],
+			defaultStyle: {
+				color: combineRgb(0, 0, 0),
+				bgcolor: combineRgb(255, 255, 0),
+			},
+			callback: (feedback) => {
+				return this.DATA['color-temp'] == feedback.options.color_temp
+			},
+		}
+
+		feedbacks['tally_umd1'] = {
+			type: 'boolean',
+			name: 'Tally Color - UMD1',
+			description: 'If tally color and UMD1 are in the specified states, give feedback',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Tally UMD1',
+					id: 'tally_umd1',
+					choices: this.CHOICES_UMD_TALLY_UMD1,
+					default: this.CHOICES_UMD_TALLY_UMD1.length > 0 ? this.CHOICES_UMD_TALLY_UMD1[0].id : '',
+				},
+			],
+			defaultStyle: {
+				color: combineRgb(0, 0, 0),
+				bgcolor: combineRgb(255, 255, 0),
+			},
+			callback: (feedback) => {
+				return this.DATA['tally-umd1'] == feedback.options.tally_umd1
 			},
 		}
 

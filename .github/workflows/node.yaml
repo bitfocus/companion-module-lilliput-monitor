@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [18.x]
+        node-version: [18.x, 22.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +30,9 @@ jobs:
       - name: prettier
         run: |
           yarn prettier --check .
+      - name: eslint
+        run: |
+          yarn eslint .
       #- name: Test jest
       #  run: |
       #    yarn test
@@ -43,5 +46,5 @@ jobs:
       - name: Save artifact
         uses: actions/upload-artifact@v4
         with:
-          name: module
-          path: ${{github.workspace}}/pkg.tgz
+          name: module-${{ matrix.node-version }}
+          path: ${{github.workspace}}/*.tgz

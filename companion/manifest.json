@@ -3,7 +3,7 @@
 	"name": "lilliput-monitor",
 	"shortname": "lilliput-monitor",
 	"description": "Lilliput Monitor",
-	"version": "1.0.1",
+	"version": "0.0.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-lilliput-monitor.git",
 	"bugs": "https://github.com/bitfocus/companion-module-lilliput-monitor/issues",
@@ -21,8 +21,5 @@
 	"legacyIds": [],
 	"manufacturer": "Lilliput",
 	"products": ["Monitor", "Q18"],
-	"keywords": [
-		"Lilliput",
-		"Monitor"
-	]
+	"keywords": ["Lilliput", "Monitor"]
 }
