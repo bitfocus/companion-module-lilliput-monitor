@@ -22,9 +22,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@companion-module/tools@npm:^2.1.0":
-  version: 2.4.1
-  resolution: "@companion-module/tools@npm:2.4.1"
+"@companion-module/tools@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "@companion-module/tools@npm:2.4.2"
   dependencies:
     "@eslint/js": "npm:^9.36.0"
     eslint-config-prettier: "npm:^10.1.8"
@@ -53,7 +53,7 @@ __metadata:
     companion-generate-manifest: scripts/generate-manifest.js
     companion-module-build: scripts/build.js
     companion-module-check: scripts/check.js
-  checksum: 10c0/dfb5698f82edb43c2a2787b5f8036fe08bbf8b9467cfe042b965af71b01695bba4c33df33932526d42508576d1dbd5f60ce21e35d7b862009c163e6f493612ff
+  checksum: 10c0/b4684c50dba38c12fc666e3b3f56b8723330dc8c21688b19d10bf1a5fb367a907dc7a02c8c14a7f3ae3a0fda902a7b09145c05daca771c8db61892e4c76cccee
   languageName: node
   linkType: hard
 
@@ -1811,7 +1811,7 @@ __metadata:
   resolution: "lilliput-monitor@workspace:."
   dependencies:
     "@companion-module/base": "npm:^1.13.2"
-    "@companion-module/tools": "npm:^2.1.0"
+    "@companion-module/tools": "npm:^2.4.2"
     eslint: "npm:^9.39.1"
     lilliput-monitor: "github:peternewman/lilliput-monitor"
     prettier: "npm:^3.3.3"
