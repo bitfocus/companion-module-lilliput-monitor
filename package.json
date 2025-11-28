@@ -23,7 +23,7 @@
 	"devDependencies": {
 		"@companion-module/tools": "^2.4.2",
 		"eslint": "^9.39.1",
-		"prettier": "^3.3.3"
+		"prettier": "^3.7.1"
 	},
 	"packageManager": "yarn@4.5.3"
 }
