@@ -5,9 +5,9 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@companion-module/base@npm:^1.13.2":
-  version: 1.13.2
-  resolution: "@companion-module/base@npm:1.13.2"
+"@companion-module/base@npm:^1.13.5":
+  version: 1.13.5
+  resolution: "@companion-module/base@npm:1.13.5"
   dependencies:
     ajv: "npm:^8.17.1"
     colord: "npm:^2.9.3"
@@ -18,7 +18,7 @@ __metadata:
     p-queue: "npm:^6.6.2"
     p-timeout: "npm:^4.1.0"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/7ba61823d2a456401e13fb2d3e22ef2e5d7faa64ed5a7864b3d08f0ba93b481e083c4fe0e9e438a23bd06d2ca82d8cd4d0c9cbebc372eacfb2e8c782d5e805c8
+  checksum: 10c0/cb88a1a57a1aa1c60b4198bc055446ec8184a16bd724c39596bd112b309bd570af120462f1642146d363abfbe62ca9adad07c9cfc2eb2a875693413b8e308956
   languageName: node
   linkType: hard
 
@@ -1810,7 +1810,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "lilliput-monitor@workspace:."
   dependencies:
-    "@companion-module/base": "npm:^1.13.2"
+    "@companion-module/base": "npm:^1.13.5"
     "@companion-module/tools": "npm:^2.4.2"
     eslint: "npm:^9.39.1"
     lilliput-monitor: "github:peternewman/lilliput-monitor"
